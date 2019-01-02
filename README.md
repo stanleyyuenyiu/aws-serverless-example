@@ -62,8 +62,8 @@ var awsConfig = {
         ]
 	},
 	Auth:{
-		identityPoolId: {CognitoId}', 
-         	region: {Region}'
+		identityPoolId: "{CognitoId}", 
+         	region: "{Region}"
 	}
 }
 ```
