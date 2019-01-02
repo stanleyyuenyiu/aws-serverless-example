@@ -21,7 +21,7 @@
                         "TargetOriginId" : {"Fn::Join": ["", ["S3-", {"Ref": "FrontendBucket"} ]]},
                         "ForwardedValues" : {"QueryString":"false"}
                     },
-                   "PriceClass" : "PriceClass_100",
+                   "PriceClass" : "PriceClass_All",
                    "ViewerCertificate" : { "CloudFrontDefaultCertificate" : "true" }  
                 }
             }
@@ -60,5 +60,19 @@
                 }
             }
         }
+    },
+  "Outputs": {
+    "BucketName": {
+      "Value": {"Ref": "FrontendBucket"}
+    },
+    "BucketUrlForOAIVerify": {
+      "Value": {"Fn::Join": ["", ["https://", "s3-", {"Ref": "AWS::Region"} , ".amazonaws.com/", {"Ref":"FrontendBucket"}, "/index.html"]]}
+    },
+    "CloudFrontUrl": {
+      "Value": {"Fn::Join": ["", ["https://", {"Fn::GetAtt": ["FrontendCloudFront", "DomainName"]} ,  "/index.html"]]}
+    },
+    "CloudFrontId": {
+      "Value": {"Ref": "FrontendCloudFront"}
     }
+  }
 }
