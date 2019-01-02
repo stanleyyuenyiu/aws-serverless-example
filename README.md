@@ -6,7 +6,7 @@
 ```export AWS_DEFAULT_REGION=ap-southeast-1
 export S3Bucket=stanleyyuen-restapi
 aws s3 mb s3://$S3Bucket
-aws s3 cp {git cloned path}/backend/ipdetection.zip s3://$S3Bucket/ipdetection.zip
+aws s3 cp **{git cloned path}**/backend/ipdetection.zip s3://$S3Bucket/ipdetection.zip
 ```
 3.	Create cloudformation stack
 ```
