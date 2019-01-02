@@ -56,7 +56,7 @@ var awsConfig = {
 		endpoints: [
             {
                 name: "ips",
-                endpoint: "{ApiBaseUrl}/",
+                endpoint: "{ApiBaseUrl}",
                 region: "{Region}"
             },
         ]
@@ -72,7 +72,8 @@ var awsConfig = {
 aws cloudformation create-stack --stack-name frontend --template-body file://$GITClonedPath/cf/frontend.json --capabilities CAPABILITY_IAM 
 ```
 10. Wait cloudformation stack finish
-```aws cloudformation wait stack-create-complete --stack-name frontend
+```
+aws cloudformation wait stack-create-complete --stack-name frontend
 ```
 11. Grep the output of cloudformation stack
 ```
