@@ -1,0 +1,64 @@
+{
+    "AWSTemplateFormatVersion" : "2010-09-09",
+    "Resources" : {
+        "FrontendCloudFront" : {
+            "Type" : "AWS::CloudFront::Distribution",
+            "Properties" : {
+                "DistributionConfig" : {
+                    "Origins" : [ {
+                        "DomainName" : {"Fn::Join": ["", [{"Ref": "FrontendBucket"}, ".s3.amazonaws.com"]]}, 
+                        "Id" : {"Fn::Join": ["", ["S3-", {"Ref": "FrontendBucket"} ]]}, 
+                        "S3OriginConfig" : {
+                            "OriginAccessIdentity" :  {"Fn::Join": ["", [ "origin-access-identity/cloudfront/", {"Ref": "CloudFrontOriginAccessIdentity"}]]}
+                        }
+                    }],
+                    "HttpVersion":"http2",
+                    "Enabled" : "false",
+                    "DefaultRootObject" : "index.html",
+                    "DefaultCacheBehavior" : {
+                        "ViewerProtocolPolicy": "redirect-to-https",
+                        "Compress" : "true",
+                        "TargetOriginId" : {"Fn::Join": ["", ["S3-", {"Ref": "FrontendBucket"} ]]},
+                        "ForwardedValues" : {"QueryString":"false"}
+                    },
+                   "PriceClass" : "PriceClass_100",
+                   "ViewerCertificate" : { "CloudFrontDefaultCertificate" : "true" }  
+                }
+            }
+        },
+        "CloudFrontOriginAccessIdentity": {
+            "Type": "AWS::CloudFront::CloudFrontOriginAccessIdentity",
+            "Properties": {
+                "CloudFrontOriginAccessIdentityConfig": {
+                    "Comment": "CloudFront OAI"
+                }
+            }
+        },
+        "FrontendBucket": {
+            "Type": "AWS::S3::Bucket",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+            }
+        },
+        "FrontendBucketPolicy": {
+            "Type": "AWS::S3::BucketPolicy",
+            "Properties": {
+                "Bucket": {"Ref": "FrontendBucket"},
+                "PolicyDocument": {
+                    "Statement": [
+                        {
+                            "Action": [
+                                "s3:GetObject"
+                            ],
+                            "Effect": "Allow",
+                            "Resource":  {"Fn::Join": ["", [ "arn:aws:s3:::",  {"Ref": "FrontendBucket"}, "/*"]]},
+                            "Principal": {
+                                "CanonicalUser": {"Fn::GetAtt": ["CloudFrontOriginAccessIdentity", "S3CanonicalUserId"]}
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}
