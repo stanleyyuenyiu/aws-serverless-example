@@ -1,26 +1,30 @@
 # aws-serverless-example
 
-1.	Clone the project from https://github.com/stanleyyuenyiu/aws-serverless-example
-
-2.	Create a S3 bucket and Upload the lambda source code to the S3 bucket
-```export AWS_DEFAULT_REGION=ap-southeast-1
+1. Clone the project from https://github.com/stanleyyuenyiu/aws-serverless-example
+2. Export the cloned path var
+```
+export GITClonedPath={git cloned path}
+```
+3. Create a S3 bucket and Upload the lambda source code to the S3 bucket
+```
+export AWS_DEFAULT_REGION=ap-southeast-1
 export S3Bucket=stanleyyuen-restapi
 aws s3 mb s3://$S3Bucket
-aws s3 cp **{git cloned path}**/backend/ipdetection.zip s3://$S3Bucket/ipdetection.zip
+aws s3 cp $GITClonedPath/backend/ipdetection.zip s3://$S3Bucket/ipdetection.zip
 ```
-3.	Create cloudformation stack
+4. Create cloudformation stack
 ```
-aws cloudformation create-stack --stack-name backend --template-body file://cloudformation.json --capabilities CAPABILITY_IAM --parameters ParameterKey=S3Bucket,ParameterValue=$S3Bucket
+aws cloudformation create-stack --stack-name backend --template-body file://$GITClonedPath/cf/backend.json --capabilities CAPABILITY_IAM --parameters ParameterKey=S3Bucket,ParameterValue=$S3Bucket
 ```
-4.	Wait cloudformation stack finish
+5. Wait cloudformation stack finish
 ```
 aws cloudformation wait stack-create-complete --stack-name backend
 ```
-5.	Grep the output of cloudformation stack
+6. Grep the output of cloudformation stack
 ```
 aws cloudformation describe-stacks --stack-name backend --query Stacks[0].Outputs
 ```
-6.	Expected output
+7. Expected output
 ```
 [
     {
@@ -45,8 +49,8 @@ aws cloudformation describe-stacks --stack-name backend --query Stacks[0].Output
     }
 ]
 ```
-7.	Open frontend configuration file -> {git cloned path}/frontend/dist/config.js, update below yellow  highlighted “OutputKey” from above corresponding “OutputValue”
-```
+8.Open frontend configuration file -> $GITClonedPath/frontend/dist/config.js, update {ApiBaseUrl},{Region},{CognitoId} to "OutputValue" from above corresponding “OutputKey”
+```javascript
 var awsConfig = {
 	API:{
 		endpoints: [
@@ -59,33 +63,37 @@ var awsConfig = {
 	},
 	Auth:{
 		identityPoolId: {CognitoId}', 
-         region: {Region}'
+         	region: {Region}'
 	}
 }
 ```
-8.	Create cloudformation stack for frontend
-aws cloudformation create-stack --stack-name frontend --template-body file:// {git cloned path}/cf/frontend.json --capabilities CAPABILITY_IAM 
-
-9.	Wait cloudformation stack finish
-aws cloudformation wait stack-create-complete --stack-name frontend
-
-10.	Grep the output of cloudformation stack
+9. Create cloudformation stack for frontend
+```
+aws cloudformation create-stack --stack-name frontend --template-body file://$GITClonedPath/cf/frontend.json --capabilities CAPABILITY_IAM 
+```
+10. Wait cloudformation stack finish
+```aws cloudformation wait stack-create-complete --stack-name frontend
+```
+11. Grep the output of cloudformation stack
+```
 aws cloudformation describe-stacks --stack-name frontend --query Stacks[0].Outputs
-
-11.	Expected output
-
-
-12.	Open folder {git cloned path}/frontend/dist/, upload files to S3, update below yellow highlighted “OutputKey” from above corresponding “OutputValue”
+```
+12. Expected output
+13. Upload files to S3, update {BucketName} to "OutputValue" from above corresponding “OutputKey”
+```
 export S3BucketFrontend={BucketName}
 aws s3 mb s3://$S3BucketFrontend
-aws s3 cp {git cloned path}/frontend/index.html s3://$S3BucketFrontend/index.html
-aws s3 cp {git cloned path}/frontend/config.js s3://$S3BucketFrontend/config.js
-aws s3 cp {git cloned path}/frontend/index.html s3://$S3BucketFrontend/main.bundle.js
-
-13.	Get Etag from current t cloudfront distribution, update below yellow highlighted “OutputKey” from above corresponding “OutputValue” of step 11
+aws s3 cp $GITClonedPath/frontend/index.html s3://$S3BucketFrontend/index.html
+aws s3 cp $GITClonedPath/frontend/config.js s3://$S3BucketFrontend/config.js
+aws s3 cp $GITClonedPath/frontend/index.html s3://$S3BucketFrontend/main.bundle.js
+```
+14.	Get Etag from current cloudfront distribution, update {CloudFrontId}  to "OutputValue" from above corresponding “OutputKey” at step 12
+```
 aws cloudfront get-distribution-config --id {CloudFrontId}
-
-14.	Enable cloudfront from CLI, update below yellow highlighted “OutputKey” from above corresponding “OutputValue” of step 11
-aws cloudfront update-distribution --id {CloudFrontId} --distribution-config file://{git cloned path}/distconfig-enable.json --if-match {CloudFrontEtag}
-
-15.	Open browser and enter {CloudFrontUrl} to verify the application, open browser and enter {BucketUrlForOAIVerify} to verify the OAI restrict access of the S3
+```
+15.	Enable cloudfront from CLI, update {CloudFrontId} to "OutputValue" from above corresponding “OutputKey” at step 12, update {Etag} to the "Etag" value from step 14
+```
+export cloudfrontEtag={Etag}
+aws cloudfront update-distribution --id {CloudFrontId} --distribution-config file://$GITClonedPath/distconfig-enable.json --if-match $cloudfrontEtag
+```
+16.	Open browser and enter {CloudFrontUrl} to verify the application, open browser and enter {BucketUrlForOAIVerify} to verify the OAI restrict access of the S3
