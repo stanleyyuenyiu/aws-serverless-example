@@ -9,13 +9,16 @@ aws s3 mb s3://$S3Bucket
 aws s3 cp {git cloned path}/backend/ipdetection.zip s3://$S3Bucket/ipdetection.zip
 ```
 3.	Create cloudformation stack
-```aws cloudformation create-stack --stack-name backend --template-body file://cloudformation.json --capabilities CAPABILITY_IAM --parameters ParameterKey=S3Bucket,ParameterValue=$S3Bucket
+```
+aws cloudformation create-stack --stack-name backend --template-body file://cloudformation.json --capabilities CAPABILITY_IAM --parameters ParameterKey=S3Bucket,ParameterValue=$S3Bucket
 ```
 4.	Wait cloudformation stack finish
-```aws cloudformation wait stack-create-complete --stack-name backend
+```
+aws cloudformation wait stack-create-complete --stack-name backend
 ```
 5.	Grep the output of cloudformation stack
-```aws cloudformation describe-stacks --stack-name backend --query Stacks[0].Outputs
+```
+aws cloudformation describe-stacks --stack-name backend --query Stacks[0].Outputs
 ```
 6.	Expected output
 ```
