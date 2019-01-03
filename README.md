@@ -1,4 +1,23 @@
-# aws-serverless-example
+# Auto Deploy
+
+## prerequisite
+Install aws-cli 
+https://docs.aws.amazon.com/en_us/cli/latest/userguide/cli-chap-install.html
+
+Install jq
+https://stedolan.github.io/jq/download/
+
+Configurate default aws profile
+https://docs.aws.amazon.com/en_us/cli/latest/userguide/cli-chap-configure.html
+
+## How to use
+Navigate to the project clone path, run below command
+```
+sh run.sh
+```
+
+
+# Manual Deploy
 
 1. Clone the project from https://github.com/stanleyyuenyiu/aws-serverless-example
 2. Export the cloned path var, replace {git cloned path} to the path where you clone the project
