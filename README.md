@@ -11,9 +11,14 @@ Configurate default aws profile
 https://docs.aws.amazon.com/en_us/cli/latest/userguide/cli-chap-configure.html
 
 ## How to use
-Navigate to the project clone path, run below command
+Navigate to the project clone path, run below command, it will use your default aws profile to execute
 ```
 sh run.sh
+```
+Optional: 
+To execute with other aws profile, replace below "[my_profile_name]" with your aws profile
+```
+sh run.sh [my_profile_name]
 ```
 
 
