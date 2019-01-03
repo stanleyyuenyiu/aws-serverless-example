@@ -1,7 +1,7 @@
 # aws-serverless-example
 
 1. Clone the project from https://github.com/stanleyyuenyiu/aws-serverless-example
-2. Export the cloned path var
+2. Export the cloned path var, replace {git cloned path} to the path where you clone the project
 ```
 export GITClonedPath={git cloned path}
 ```
