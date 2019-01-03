@@ -8,7 +8,7 @@ export GITClonedPath={git cloned path}
 3. Create a S3 bucket and Upload the lambda source code to the S3 bucket
 ```
 export AWS_DEFAULT_REGION=ap-southeast-1
-export S3Bucket=stanleyyuen-restapi
+export S3Bucket=backend-restapi
 aws s3 mb s3://$S3Bucket
 aws s3 cp $GITClonedPath/backend/ipdetection.zip s3://$S3Bucket/ipdetection.zip
 ```
