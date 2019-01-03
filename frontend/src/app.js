@@ -19,7 +19,7 @@ async function callAPI(){
 	    //	var obj = JSON.parse(response)
 	    	var obj = response.data
 	    	var str = "Your IP is:" +  obj.IP[0];
-	    	str += "<br/>Proxy IP is:" +  obj.IP[1];
+	    	str += "<br/>Remote Server IP of the API is:" +  obj.RemoteIP;
 	    	document.getElementById("Result").innerHTML = str;
 	    }catch(e){
 	    	console.log(e);

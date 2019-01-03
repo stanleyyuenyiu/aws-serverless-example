@@ -1,0 +1,4 @@
+BucketUrlForOAIVerify:https://s3-ap-southeast-1.amazonaws.com/frontend-frontendbucket-9zdf7nn66utp/index.html
+BucketName:frontend-frontendbucket-9zdf7nn66utp
+CloudFrontUrl:https://ddcbus9dh2gvn.cloudfront.net/index.html
+CloudFrontId:EDK6SJ05GH29V
