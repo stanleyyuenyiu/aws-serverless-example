@@ -10,7 +10,7 @@ export GITClonedPath={git cloned path}
 export AWS_DEFAULT_REGION=ap-southeast-1
 export S3Bucket=backend-restapi
 aws s3 mb s3://$S3Bucket
-aws s3 cp $GITClonedPath/backend/ipdetection.zip s3://$S3Bucket/ipdetection.zip
+aws s3 cp $GITClonedPath/backend/ipdetection/ipdetection.zip s3://$S3Bucket/ipdetection.zip
 ```
 4. Create cloudformation stack
 ```
