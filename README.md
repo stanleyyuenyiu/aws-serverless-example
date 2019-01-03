@@ -86,7 +86,7 @@ export S3BucketFrontend={BucketName}
 aws s3 mb s3://$S3BucketFrontend
 aws s3 cp $GITClonedPath/frontend/index.html s3://$S3BucketFrontend/index.html
 aws s3 cp $GITClonedPath/frontend/config.js s3://$S3BucketFrontend/config.js
-aws s3 cp $GITClonedPath/frontend/index.html s3://$S3BucketFrontend/main.bundle.js
+aws s3 cp $GITClonedPath/frontend/main.bundle.js s3://$S3BucketFrontend/main.bundle.js
 ```
 14.	Get Etag from current cloudfront distribution, update {CloudFrontId}  to "OutputValue" from above corresponding “OutputKey” at step 12
 ```
