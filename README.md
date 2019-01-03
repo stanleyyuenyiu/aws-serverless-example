@@ -1,4 +1,4 @@
-Please select either one of the deployment step of the application as below
+Please select either one of the deployment step (**Auto Deploy & Installation** or **Manual Deploy & Installation**) to deploy the application
 
 # Auto Deploy & Installation
 
