@@ -80,21 +80,31 @@ aws cloudformation wait stack-create-complete --stack-name frontend
 aws cloudformation describe-stacks --stack-name frontend --query Stacks[0].Outputs
 ```
 12. Expected output
+```
+[
+    {
+        "OutputKey": "BucketUrlForOAIVerify",
+        "OutputValue": "https://s3-ap-southeast-1.amazonaws.com/frontend-frontendbucket-9zdf7nn66utp/index.html"
+    },
+    {
+        "OutputKey": "BucketName",
+        "OutputValue": "frontend-frontendbucket-9zdf7nn66utp"
+    },
+    {
+        "OutputKey": "CloudFrontUrl",
+        "OutputValue": "https://ddcbus9dh2gvn.cloudfront.net/index.html"
+    },
+    {
+        "OutputKey": "CloudFrontId",
+        "OutputValue": "EDK6SJ05GH29V"
+    }
+]
+```
 13. Upload files to S3, update {BucketName} to "OutputValue" from above corresponding “OutputKey”
 ```
 export S3BucketFrontend={BucketName}
-aws s3 mb s3://$S3BucketFrontend
-aws s3 cp $GITClonedPath/frontend/index.html s3://$S3BucketFrontend/index.html
-aws s3 cp $GITClonedPath/frontend/config.js s3://$S3BucketFrontend/config.js
-aws s3 cp $GITClonedPath/frontend/main.bundle.js s3://$S3BucketFrontend/main.bundle.js
+aws s3 cp $GITClonedPath/frontend/dist/index.html s3://$S3BucketFrontend/index.html
+aws s3 cp $GITClonedPath/frontend/dist/config.js s3://$S3BucketFrontend/config.js
+aws s3 cp $GITClonedPath/frontend/dist/main.bundle.js s3://$S3BucketFrontend/main.bundle.js
 ```
-14.	Get Etag from current cloudfront distribution, update {CloudFrontId}  to "OutputValue" from above corresponding “OutputKey” at step 12
-```
-aws cloudfront get-distribution-config --id {CloudFrontId}
-```
-15.	Enable cloudfront from CLI, update {CloudFrontId} to "OutputValue" from above corresponding “OutputKey” at step 12, update {Etag} to the "Etag" value from step 14
-```
-export cloudfrontEtag={Etag}
-aws cloudfront update-distribution --id {CloudFrontId} --distribution-config file://$GITClonedPath/distconfig-enable.json --if-match $cloudfrontEtag
-```
-16.	Open browser and enter {CloudFrontUrl} to verify the application, open browser and enter {BucketUrlForOAIVerify} to verify the OAI restrict access of the S3
+14.	Open browser and enter {CloudFrontUrl} to verify the application, open browser and enter {BucketUrlForOAIVerify} to verify the OAI restrict access of the S3
