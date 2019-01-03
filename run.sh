@@ -27,9 +27,9 @@ aws cloudformation wait stack-create-complete --stack-name backend --profile=$pr
 echo "---------------------------------------------------------------------------------------------------"
 echo "Apply cloudformation output to frontend config..."
 echo "---------------------------------------------------------------------------------------------------"
-aws cloudformation describe-stacks --stack-name backend --query Stacks[0].Outputs --profile=$profile | jq -r '.[] | .OutputKey + ":"+ .OutputValue' | while IFS='' read -r data; do \
-K="$(cut -d':' -f1 <<<"$data")"; \
-V="$(cut -d':' -f2 <<<"$data")"; \
+aws cloudformation describe-stacks --stack-name backend --query Stacks[0].Outputs --profile=$profile | jq -r '.[] | .OutputKey + ";"+ .OutputValue' | while IFS='' read -r data; do \
+K="$(cut -d';' -f1 <<<"$data")"; \
+V="$(cut -d';' -f2 <<<"$data")"; \
 file=$GITClonedPath/frontend/dist/config.js; \
 sed -i '' -e 's|'{$K}'|'$V'|g' $file ; \
 done;
