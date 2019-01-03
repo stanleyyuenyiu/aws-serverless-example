@@ -1,4 +1,23 @@
-# aws-serverless-example
+# Auto Deploy
+
+## prerequisite
+Install aws-cli 
+https://docs.aws.amazon.com/en_us/cli/latest/userguide/cli-chap-install.html
+
+Install jq
+https://stedolan.github.io/jq/download/
+
+Configurate default aws profile
+https://docs.aws.amazon.com/en_us/cli/latest/userguide/cli-chap-configure.html
+
+## How to use
+Navigate to the project clone path, run below command
+```
+sh run.sh
+```
+
+
+# Manual Deploy
 
 1. Clone the project from https://github.com/stanleyyuenyiu/aws-serverless-example
 2. Export the cloned path var, replace {git cloned path} to the path where you clone the project
@@ -8,7 +27,7 @@ export GITClonedPath={git cloned path}
 3. Create a S3 bucket and Upload the lambda source code to the S3 bucket
 ```
 export AWS_DEFAULT_REGION=ap-southeast-1
-export S3Bucket=backend-restapi
+export S3Bucket=backendbucket-api
 aws s3 mb s3://$S3Bucket
 aws s3 cp $GITClonedPath/backend/ipdetection/ipdetection.zip s3://$S3Bucket/ipdetection.zip
 ```
