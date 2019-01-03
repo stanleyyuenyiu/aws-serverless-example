@@ -1,4 +1,6 @@
-# Auto Deploy
+Please select either one of the deployment step of the application as below
+
+# Auto Deploy & Installation
 
 ## prerequisite
 Install aws-cli 
@@ -22,7 +24,7 @@ sh run.sh [my_profile_name]
 ```
 
 
-# Manual Deploy
+# Manual Deploy & Installation
 
 1. Clone the project from https://github.com/stanleyyuenyiu/aws-serverless-example
 2. Export the cloned path var, replace {git cloned path} to the path where you clone the project
